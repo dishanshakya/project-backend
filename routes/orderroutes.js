@@ -15,8 +15,8 @@ router.get('/recentorders', getRecentOrders);
 router.get('/similarorders/:id', similarOrders);
 router.get('/categories', getCategories)
 router.post('/search', searchController)
-router.post('/comments', commentController)
-router.post('/replies', replyController)
+router.post('/comments',authenticateUser, commentController)
+router.post('/replies',authenticateUser, replyController)
 router.get('/replies/:comment_id', viewReplies)
 router.get('/comments/:order_id', viewComments)
 router.get('/:id', viewOrder);

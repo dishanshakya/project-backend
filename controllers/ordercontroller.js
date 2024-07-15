@@ -31,6 +31,7 @@ const postOrder = async (req,res) =>{
 
 const getRecentOrders = async (req,res) =>{
     try {
+        console.log(req.cookies)
         const orders = await pool.query(orderQueries.recentorders)
         res.status(200).send(JSON.stringify(orders.rows))
     }
@@ -81,7 +82,7 @@ const commentController = async (req, res) => {
     try {
         const {text, order_id} = req.body
         console.log(req.body)
-        const result = await pool.query(orderQueries.comment, [text, order_id, 1])
+        const result = await pool.query(orderQueries.comment, [text, order_id, req.user])
         res.status(200).send('commented successfully')
     }
     catch(err) {
@@ -94,7 +95,7 @@ const replyController = async (req, res) => {
     try {
         const {text, comment_id} = req.body
         console.log(req.body)
-        const result = await pool.query(orderQueries.replies, [text, comment_id, 1])
+        const result = await pool.query(orderQueries.replies, [text, comment_id, req.user])
         const update = await pool.query(orderQueries.updateComments, [comment_id])
         res.status(200).send('replied successfully')
     }
@@ -131,7 +132,6 @@ const viewComments = async (req, res) => {
 
 const getCategories = async (req, res) => {
     try {
-        console.log('ok')
         const result = await pool.query(orderQueries.categories)
         res.status(200).send(JSON.stringify(result.rows))
     }

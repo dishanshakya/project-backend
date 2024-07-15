@@ -25,6 +25,8 @@ const register = async (req,res)=>{
             console.log(err);
             throw new HttpError(err, 500);
         }
+        const user = await pool.query(userQueries.getUserFromEmail, [email])
+        attachCookieToResponse({res, user: user.rows[0].user_id})
         res.status(200).send("registered successfully")
        }
     catch(httpError){
@@ -66,7 +68,19 @@ const login = async (req,res)=>{
 
 }
 
+const checkValidity = async (req, res) => {
+    try{
+        const getUser = await pool.query(userQueries.getUserFromId, [req.user])
+        res.status(200).send(JSON.stringify(getUser.rows[0]))
+    }
+    catch(err) {
+        console.log(err)
+        res.status(400).send('cannot validate')
+    }
+}
+
 module.exports = {
     register,
     login,
+    checkValidity
 }

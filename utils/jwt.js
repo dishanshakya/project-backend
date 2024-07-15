@@ -13,12 +13,10 @@ const createJWT = (payload) => {
 const attachCookieToResponse = ({ res, user }) => {
     console.log(`attaching ${user} into cookie`);
     const token = createJWT(user);
+    console.log(token)
     try{
         res.cookie('token', token,  {
             httpOnly: true,
-            maxAge: 24*60*60,  
-            secure: true,
-            signed: true
         });
     } catch(err){console.log(err);}
 }
