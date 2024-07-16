@@ -79,8 +79,16 @@ const checkValidity = async (req, res) => {
     }
 }
 
+const logout = async (req, res) => {
+    res.cookie('token', 'none', {
+        httpOnly: true
+    })
+    res.status(200).send('logout successful')
+}
+
 module.exports = {
     register,
     login,
-    checkValidity
+    checkValidity,
+    logout,
 }

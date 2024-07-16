@@ -10,7 +10,7 @@ const {
 const router = Router();
 
 
-router.post('/postorder',upload.single('file'), postOrder);
+router.post('/postorder',authenticateUser, upload.single('file'), postOrder);
 router.get('/recentorders', getRecentOrders);
 router.get('/similarorders/:id', similarOrders);
 router.get('/categories', getCategories)

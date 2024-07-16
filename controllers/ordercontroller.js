@@ -5,7 +5,7 @@ const multer = require ('../middlewares/multer');
 
 const postOrder = async (req,res) =>{
     try {
-        const user_id = 1;
+        const user_id = req.user;
         const {order_type, product_name, price, description, location, contact, category} = req.body;
         var img_src = `http://localhost:4000/${req.file.filename}`;
         console.log(img_src);
