@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const multer = require('multer')
 const {authenticateUser} = require('../middlewares/auth');
-const upload = require('../middlewares/multer')
+const {upload} = require('../middlewares/multer')
 const {
     postOrder, getRecentOrders, viewOrder, similarOrders, searchController, commentController, viewReplies,
     viewComments, replyController, getCategories

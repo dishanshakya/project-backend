@@ -7,7 +7,11 @@ const postOrder = async (req,res) =>{
     try {
         const user_id = req.user;
         const {order_type, product_name, price, description, location, contact, category} = req.body;
-        var img_src = `http://localhost:4000/${req.file.filename}`;
+        if (req.file)
+            var img_src = `http://localhost:4000/${req.file.filename}`;
+        else if (req.body.order_type == 'buy')
+            var img_src = `http://localhost:4000/buy.jpg`
+        else var img_src = 'http://localhost:4000/noimage.jpg'
         console.log(img_src);
         console.log(req.body)
 
@@ -25,7 +29,8 @@ const postOrder = async (req,res) =>{
 
     }
     catch(httpError){
-        res.status(httpError.status).send(httpError.msg);
+        console.log(httpError)
+        res.status(400).send('error');
     }
 }
 
