@@ -11,6 +11,5 @@ const pool = new Pool({
     ssl: true
 });
 
-console.log(process.env)
 
 module.exports = pool;
