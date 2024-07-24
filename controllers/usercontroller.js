@@ -3,6 +3,7 @@ const pool = require('../database/db')
 const userQueries = require('../queries/userQueries')
 const authQueries = require('../queries/authQueries')
 const HttpError = require('../error/httpError')
+const uploadImage = require('../utils/cloudinary')
 
 
 const passwordChange = async (req, res) => {
@@ -26,10 +27,11 @@ const passwordChange = async (req, res) => {
 }
 
 const profilePicChange = async (req, res) => {
-    const img_src = `http://localhost:4000/${req.file.filename}`
     
     try {
-        const results = await pool.query(userQueries.changeProfilePic, [img_src, req.user])
+        const img_src = await uploadImage(req.file, 'profilepics')
+        console.log(img_src)
+        const results = await pool.query(userQueries.changeProfilePic, [img_src.url, req.user])
         res.status(200).send('Profile Picture Changed Successfully')
     }
     catch (err) {

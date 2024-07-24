@@ -2,16 +2,19 @@ const orderQueries = require('../queries/orderQueries');
 const pool = require('../database/db');
 const httpError = require('../error/httpError')
 const multer = require ('../middlewares/multer');
+const uploadImage = require('../utils/cloudinary');
 
 const postOrder = async (req,res) =>{
     try {
         const user_id = req.user;
         const {order_type, product_name, price, description, location, contact, category} = req.body;
-        if (req.file)
-            var img_src = `http://localhost:4000/${req.file.filename}`;
+        if (req.file){
+            const result = await uploadImage(req.file, 'orders')
+            var img_src = result.url
+        }
         else if (req.body.order_type == 'buy')
-            var img_src = `http://localhost:4000/buy.jpg`
-        else var img_src = 'http://localhost:4000/noimage.jpg'
+            var img_src = `https://res.cloudinary.com/dv42rw1zq/image/upload/v1721827908/orders/buy.jpg`
+        else var img_src = 'https://res.cloudinary.com/dv42rw1zq/image/upload/v1721827962/orders/noimage.jpg'
         console.log(img_src);
         console.log(req.body)
 

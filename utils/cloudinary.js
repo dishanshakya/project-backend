@@ -17,7 +17,7 @@ const uploadImage = async(image, folder)=>{
     }
 
     try{
-        uploadedImg = await cloudinary.uploader.upload(image.tempFilePath, {
+        uploadedImg = await cloudinary.uploader.upload(image.path, {
             use_filename: true,
             filename_override: image.name,
             folder: folder
@@ -28,13 +28,10 @@ const uploadImage = async(image, folder)=>{
         throw new HttpError('failed to upload', 500);
     }
 
-    fs.unlink(image.tempFilePath, (error) => {
+    fs.unlink(image.path, (error) => {
         if (error) throw new HttpError("internal server error", 500);
     });
-
     return uploadedImg;
 }
 
 module.exports = uploadImage;
-const cloudinary = require('cloudinary').v2;
-const fs =  require('fs');
