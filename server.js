@@ -10,7 +10,9 @@ require('dotenv').config()
 const app =express();
 const port = 4000;
 app.use(express.json());
-app.use(cors({origin: process.env.ORIGIN, credentials: true}))
+app.use(cors({origin: ['http://localhost:3000',
+ 'https://thapathalibazar.netlify.app', 
+ 'https://main--thapathalibazar.netlify.app'], credentials: true}))
 app.use(express.static('uploads'));
 app.use(express.static('profilepics'));
 app.use(cookieParser());
