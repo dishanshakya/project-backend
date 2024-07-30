@@ -12,7 +12,8 @@ const port = 4000;
 app.use(express.json());
 app.use(cors({origin: ['http://localhost:3000',
  'https://thapathalibazar.netlify.app', 
- 'https://main--thapathalibazar.netlify.app'], credentials: true}))
+ 'https://main--thapathalibazar.netlify.app',
+  'http://dishanshakya.com.np', 'https://dishanshakya.com.np'], credentials: true}))
 app.use(express.static('uploads'));
 app.use(express.static('profilepics'));
 app.use(cookieParser());
