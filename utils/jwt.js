@@ -17,6 +17,8 @@ const attachCookieToResponse = ({ res, user }) => {
     try{
         res.cookie('token', token,  {
             httpOnly: true,
+            sameSite: 'none',
+            secure: true
         });
     } catch(err){console.log(err);}
 }
